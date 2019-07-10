@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<div class="container">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h1 class="card-title">제목: {{blog.title}}</h1>
+                <h6 class="card-subtitle mb-2 text-muted">{{blog.category}} ㅣ {{blog.author}} ㅣ {{blog.created_date}}</h6>
+
+                {% if blog.image %}
+                <img src="{{ blog.image.url }}" width= "500"; >
+                {% endif %}
+                <p class="card-text">본문: {{blog.body}}</p>
+                <a href="{% url 'update' blog.id %}">수정</a>
+                <a href="{% url 'delete' blog.id %}" class="delete">삭제</a>
+                <a href="{% url 'home'%}" class="card-link">home</a>
+            </div>
+        </div>
+    </div>
+
+    <p>댓글 수 : {{blog.comments.count}}</p>
+
+
+
+<hr>
+<a  href="{% url 'add_comment' blog.id %}">댓글 달기</a>
+    {% for comment in blog.comments.all %}
+    <div class="comment">
+        <div class="date">{{ comment.created_date }} {{ comment.author }}</div>
+        <p>{{ comment.text|linebreaks }}</p>
+        <a href="{% url 'edit_comment' comment.id %}">수정</a>
+        <a href="{% url 'del_comment' comment.id %}" class="delete">삭제</a>
+    </div>
+    {% empty %}
+    <p>아직 댓글이 없습니다</p>
+    {% endfor %}
+
+{% endblock %}
