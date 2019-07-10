@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '(p7p0#$^HHFGHHdggtherververvew
 # DEBUG = True
 DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = ['https://dry-caverns-52385.herokuapp.com/']
+ALLOWED_HOSTS = []
 
 
 # Application definition
