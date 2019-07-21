@@ -2,13 +2,9 @@ from django.db import models
 from django.utils import timezone
 
 Category_select = (
-    ('서울', '서울'),
-    ('인천', '인천'),
-    ('대전', '대전'),
-    ('대구', '대구'),
-    ('광주', '광주'),
-    ('울산', '울산'),
-    ('부산', '부산'),
+    ('상식', '상식'),
+    ('철학', '철학'),
+    ('정치', '정치'),
 )
 
 class Blog(models.Model):
@@ -16,7 +12,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images/')
     body = models.TextField()
-    category = models.CharField(max_length=20, choices = Category_select, default = '일반')
+    category = models.CharField(max_length=20, choices = Category_select, default = '상식')
     created_date = models.DateTimeField(default=timezone.now)
     pub_date = models.DateTimeField(blank=True, null=True)
 
@@ -41,3 +37,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class Login(models.Model):
+    login_title = models.CharField(max_length=200)

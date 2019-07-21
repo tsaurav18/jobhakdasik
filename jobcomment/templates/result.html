@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container">
+    <h1>"{{que}}"검색결과 ({{blogs.count}})</h1>
+    
+    {% if blogs.count == 0 %}
+        <div style="text-align: center; margin: 50px auto" >
+            <h2>검색결과가 없습니다! :-)</h2>
+        </div>
+        
+    {% endif %}
+    
+    {% for post in blogs %}
+        <div class="col-md-12">
+            <a href="{% url 'detail' post.id %}" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">작성자 : {{post.writer}} | {{post.pub_date}}</p>
+                </div>
+            </div>
+            </a>    
+        </div>
+    {% endfor %}
+    
+</div>
+{% endblock %}

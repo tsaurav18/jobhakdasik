@@ -10,7 +10,7 @@ from django.contrib import auth
 def home(request):
     blogs = Blog.objects
     blog_list = Blog.objects.all()
-    paginator = Paginator(blog_list, 2)
+    paginator = Paginator(blog_list, 8)
     #request된 페이지가 뭔지를 알아내고 (request페이지를 변수에 담아내고)
     page = request.GET.get('page')
     #request된 페이지를 얻어온 뒤 return 해 준다.
@@ -121,3 +121,18 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('home')
+
+def search(request):
+    if request.GET.get('q'):
+            que = request.GET.get('q')
+            variable_column = request.GET.get('search_filter')
+            search_type = 'contains'
+            filter = variable_column + '__' + search_type
+            blogs = Blog.objects.filter(**{ filter: request.GET.get('q') }).order_by('-pub_date') 
+    else:
+        return redirect('home')
+    
+    return render(request, 'result.html', {'blogs': blogs, 'que': que})
+
+def result(request):
+    return render(request, 'result.html')

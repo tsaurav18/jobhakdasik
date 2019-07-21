@@ -1,4 +1,5 @@
-
+{% load socialaccount %}
+{% providers_media_js %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>한국관광기</title>
+    <title>잡학다식</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/blog/">
 
@@ -19,6 +20,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <style>
+      .main-home{
+        text-decoration: none
+        !important;
+        color: white;
+      }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -27,7 +33,21 @@
         -ms-user-select: none;
         user-select: none;
       }
-
+      .head-contents{
+    background: linear-gradient(to top, #a926eb, #d59df1);
+    font-size: 3rem;
+    text-align: center;
+    color: white;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #af36ec;
+    border-radius: .3rem;
+    margin: auto 0;
+}
+.form-inline{
+  margin: 0 auto; 
+  width:250px;
+}
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -37,6 +57,9 @@
         background-color: black;
         margin: auto 0;
         }
+    .sidewrapper{
+    padding-top: 50px;
+  }
     </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
@@ -44,36 +67,32 @@
     <link href="blog.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-  <header class="blog-header py-3">
-    <div class="row flex-nowrap justify-content-between align-items-center">
-      <div class="col-4 pt-1">
-        <a class="text-muted" href="{% url 'newcreate' %}">글쓰기</a>
-      </div>
-      <div class="col-4 text-center">
-        <a class="blog-header-logo text-dark" href="{% url 'home' %}">한국기행</a>
-      </div>
-      <div class="col-4 d-flex justify-content-end align-items-center">
-        <a class="text-muted" href="#">
-        </a>
-        <a class="btn btn-sm btn-outline-secondary" href="{% url 'signup' %}">Sign up</a>
-      </div>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+<h5 class="my-0 mr-md-auto font-weight-normal">잡학다식</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+          {% if user.is_authenticated %}
+          <a class="p-2 text-dark" href={% url 'logout' %}>로그아웃</a> {{user.username}} 님이 로그인 중
+          {% else %}
+          <a class="p-2 text-dark" href="{% provider_login_url 'google' %}">구글 로그인</a><br>
+          <a class="p-2 text-dark" href="{% url 'login' %}">로그인</a><br>
+    
+      </nav>
+      <a class="btn btn-outline-primary" href="{% url 'signup' %}">Sign up</a><p></p>
+      {% endif %}
     </div>
-  </header>
-
-  <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-between">
-      <a class="p-2 text-muted" href="{% url 'home' %}">한국</a>
-      <a class="p-2 text-muted" href="#">서울</a>
-      <a class="p-2 text-muted" href="#">인천</a>
-      <a class="p-2 text-muted" href="#">대전</a>
-      <a class="p-2 text-muted" href="#">대구</a>
-      <a class="p-2 text-muted" href="#">광주</a>
-      <a class="p-2 text-muted" href="#">울산</a>
-      <a class="p-2 text-muted" href="#">부산</a>
-    </nav>
-  </div>
-
+    <div class= "head-contents">
+      <a class = "main-home" href= "{% url 'home' %}">잡학다식</a>
+      <form class="form-inline" action="{% url 'search' %}" method="get">
+        <div class="input-group">
+            <select name="search_filter" class="form-control" style="margin-right: 10px;">
+                <option value="title">제목</option>
+                <option value="body">내용</option>
+            </select>
+            <input type="text" class="form-control" name='q' style="margin-right: 10px;" required="true">
+            <button class="btn btn-secondary" type="submit">검색</button>
+        </div>
+    </form>
+    </div>
 
 {% block contents %}
 
@@ -82,7 +101,7 @@
 </div>
 <div class="wrapper1">
 
-  <p>한국기행 템플릿 built for <a href="https://getbootstrap.com/">한국기행</a> by <a href="https://twitter.com/mdo">@PGH</a>.</p>
+  <p>잡학다식 built for <a href="https://getbootstrap.com/">한국기행</a> by <a href="https://twitter.com/mdo">@PGH</a>.</p>
   <p>
     <a href="#">Back to top</a>
   </p>
